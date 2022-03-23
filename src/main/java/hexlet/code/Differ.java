@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Differ {
     public static Map<String, Object> generate(String filepath1, String filepath2) throws IOException {
@@ -21,7 +23,11 @@ public class Differ {
     }
 
     public static Map<String, Object> getDifference(Map<String, Object> mapFile1, Map<String, Object> mapFile2) {
-
-        return null;
+        Map<String, Object> sortedMap = mapFile1.entrySet().stream()
+                        .sorted(Map.Entry.comparingByKey())
+                        .collect(Collectors.toMap(Map.Entry::getKey,
+                                Map.Entry::getValue, (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+        System.out.println(sortedMap);
+        return sortedMap;
     }
 }
