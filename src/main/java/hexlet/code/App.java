@@ -20,7 +20,6 @@ public class App implements Callable<String> {
     @Parameters(paramLabel = "filepath2", description = "path to second file")
     private static String filepath2;
 
-
     public static void main(String[] args) {
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);

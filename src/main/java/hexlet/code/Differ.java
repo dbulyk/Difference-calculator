@@ -28,7 +28,7 @@ public class Differ {
         Set<String> keys = new TreeSet<>(fileData1.keySet());
         keys.addAll(fileData2.keySet());
         StringBuilder res = new StringBuilder("{\n");
-        keys.forEach(s -> {         //Взял forEach т.к. по тестам производительности он наиболее быстрый
+        keys.forEach(s -> {        //Взял forEach т.к. по тестам производительности он наиболее быстрый
             if (!fileData2.containsKey(s)) {
                 res.append(" - ")
                         .append(s)
