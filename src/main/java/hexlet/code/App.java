@@ -6,12 +6,11 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 @Command(name = "gendiff", version = "gendiff 1.0", mixinStandardHelpOptions = true,
         description = "Compares two configuration files and shows a difference.")
-public class App implements Callable<Map<String, Object>> {
+public class App implements Callable<String> {
     @Option(names = {"-f", "--format"}, description = "output format [default: stylish]")
     private String format = "stylish";
 
@@ -28,7 +27,7 @@ public class App implements Callable<Map<String, Object>> {
     }
 
     @Override
-    public Map<String, Object> call() throws Exception {
+    public String call() throws Exception {
         return Differ.generate(filepath1, filepath2);
     }
 }

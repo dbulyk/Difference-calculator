@@ -6,28 +6,69 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Differ {
-    public static Map<String, Object> generate(String filepath1, String filepath2) throws IOException {
+    public static String generate(String filepath1, String filepath2) throws IOException {
         String file1 = Files.readString(Paths.get(filepath1));
         String file2 = Files.readString(Paths.get(filepath2));
 
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> mapFile1 = mapper.readValue(file1, new TypeReference<>(){});
-        Map<String, Object> mapFile2 = mapper.readValue(file2, new TypeReference<>(){});
+        Map<String, Object> fileData1 = mapper.readValue(file1, new TypeReference<>(){});
+        Map<String, Object> fileData2 = mapper.readValue(file2, new TypeReference<>(){});
 
-        return getDifference(mapFile1, mapFile2);
+        String res = getDifference(fileData1, fileData2);
+        System.out.println(res);
+        return res;
     }
 
-    public static Map<String, Object> getDifference(Map<String, Object> mapFile1, Map<String, Object> mapFile2) {
-        Map<String, Object> sortedMap = mapFile1.entrySet().stream()
-                        .sorted(Map.Entry.comparingByKey())
-                        .collect(Collectors.toMap(Map.Entry::getKey,
-                                Map.Entry::getValue, (oldValue, newValue) -> oldValue, LinkedHashMap::new));
-        System.out.println(sortedMap);
-        return sortedMap;
+    public static String getDifference(Map<String, Object> fileData1, Map<String, Object> fileData2) {
+        Set<String> keys = new TreeSet<>(fileData1.keySet());
+        keys.addAll(fileData2.keySet());
+        StringBuilder res = new StringBuilder("{\n");
+        keys.forEach(s -> {         //Взял forEach т.к. по тестам производительности он наиболее быстрый
+            if (!fileData2.containsKey(s)) {
+                res.append(" - ")
+                        .append(s)
+                        .append(": ")
+                        .append(fileData1.get(s))
+                        .append("\n");
+            }
+
+            if (!fileData1.containsKey(s)) {
+                res.append(" + ")
+                        .append(s)
+                        .append(": ")
+                        .append(fileData2.get(s))
+                        .append("\n");
+            }
+
+            if (fileData2.containsKey(s) && fileData2.get(s).equals(fileData1.get(s))) {
+                res.append("   ")
+                        .append(s)
+                        .append(": ")
+                        .append(fileData1.get(s))
+                        .append("\n");
+            }
+
+            if (fileData1.containsKey(s) && fileData2.containsKey(s) && !fileData1.get(s)
+                    .equals(fileData2.get(s))) {
+                res.append(" - ")
+                        .append(s)
+                        .append(": ")
+                        .append(fileData1.get(s))
+                        .append("\n");
+                res.append(" + ")
+                        .append(s)
+                        .append(": ")
+                        .append(fileData2.get(s))
+                        .append("\n");
+            }
+        });
+        res.append("}");
+        return res.toString();
     }
+
 }
