@@ -6,9 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Differ {
     public static String generate(String filepath1, String filepath2) throws IOException {
@@ -16,8 +14,12 @@ public class Differ {
         String file2 = Files.readString(Paths.get(filepath2));
 
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> fileData1 = mapper.readValue(file1, new TypeReference<>(){});
-        Map<String, Object> fileData2 = mapper.readValue(file2, new TypeReference<>(){});
+        Map<String, Object> fileData1 = mapper.readValue(file1, new TypeReference<>() { });
+        Map<String, Object> fileData2 = mapper.readValue(file2, new TypeReference<>() { });
+
+        if (fileData1.isEmpty() && fileData2.isEmpty()) {
+            return "Оба файла пустые, невозможно провести сравнение";
+        }
 
         String res = getDifference(fileData1, fileData2);
         System.out.println(res);
@@ -28,7 +30,7 @@ public class Differ {
         Set<String> keys = new TreeSet<>(fileData1.keySet());
         keys.addAll(fileData2.keySet());
         StringBuilder res = new StringBuilder("{\n");
-        keys.forEach(s -> {        //Взял forEach т.к. по тестам производительности он наиболее быстрый
+        keys.forEach(s -> {        //Взял forEach т.к. судя по тестам производительности он наиболее быстрый
             if (!fileData2.containsKey(s)) {
                 res.append(" - ")
                         .append(s)
@@ -70,5 +72,4 @@ public class Differ {
         res.append("}");
         return res.toString();
     }
-
 }
