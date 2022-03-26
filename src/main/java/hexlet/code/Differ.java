@@ -6,20 +6,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Differ {
     public static String generate(String filepath1, String filepath2) throws IOException {
         String file1 = Files.readString(Paths.get(filepath1));
         String file2 = Files.readString(Paths.get(filepath2));
 
+        if (file1.isEmpty() || file2.isEmpty()) {
+            return "Both or one of the files are empty, it is impossible to make a comparison";
+        }
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> fileData1 = mapper.readValue(file1, new TypeReference<>() { });
         Map<String, Object> fileData2 = mapper.readValue(file2, new TypeReference<>() { });
 
-        if (fileData1.isEmpty() && fileData2.isEmpty()) {
-            return "Оба файла пустые, невозможно провести сравнение";
-        }
+
 
         String res = getDifference(fileData1, fileData2);
         System.out.println(res);

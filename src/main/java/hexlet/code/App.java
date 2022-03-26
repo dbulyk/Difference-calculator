@@ -24,6 +24,11 @@ public class App implements Callable<String> {
         System.exit(exitCode);
     }
 
+
+    /**
+     * @author Dmitry Bulykin
+     * @return String
+     */
     @Override
     public String call() throws Exception {
         return Differ.generate(filepath1, filepath2);
