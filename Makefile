@@ -15,6 +15,7 @@ lint: #Проверяем стиль кода
 clean: #Выполняем очищение проекта от предыдущих сборок
 	./gradlew clean
 
+.PHONY: build
 build: #Выполняем сборку проекта
 	./gradlew clean build
 	make lint
