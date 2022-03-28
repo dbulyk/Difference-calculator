@@ -5,6 +5,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
+import java.io.IOException;
 import java.util.concurrent.Callable;
 
 @Command(name = "gendiff", version = "gendiff 1.0", mixinStandardHelpOptions = true,
@@ -24,13 +25,19 @@ public class App implements Callable<String> {
         System.exit(exitCode);
     }
 
-
     /**
      * @author Dmitry Bulykin
      * @return String
      */
     @Override
-    public String call() throws Exception {
-        return Differ.generate(filepath1, filepath2);
+    public String call() {
+        try {
+            String res = Differ.getDifference(filepath1, filepath2);
+            System.out.println(res);
+            return res;
+        } catch (IllegalArgumentException | IOException e) {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
     }
 }

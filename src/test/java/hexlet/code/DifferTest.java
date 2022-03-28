@@ -7,11 +7,16 @@ import java.io.IOException;
 
 class DifferTest {
     @Test
-    void generateTest() throws IOException {
-        Assertions.assertEquals("Both or one of the files are empty, it is impossible to make a comparison",
-                Differ.generate("src/test/resources/fileEmpty1.json", "src/test/resources/fileEmpty2.json"));
-        Assertions.assertEquals("Both or one of the files are empty, it is impossible to make a comparison",
-                Differ.generate("src/test/resources/file1.json", "src/test/resources/fileEmpty1.json"));
+    void generateTest() throws IllegalArgumentException, IOException {
+        Throwable thrownEmptyFile = Assertions.assertThrows(IllegalArgumentException.class, () ->
+                Differ.getDifference("src/test/resources/file1.json", "src/test/resources/fileEmpty.json"));
+        Assertions.assertEquals(thrownEmptyFile.getMessage(),
+                "Comparison with an empty file is not allowed. Empty file: src/test/resources/fileEmpty.json");
+
+        Throwable thrownNotSupportedFile = Assertions.assertThrows(IllegalArgumentException.class, () ->
+                Differ.getDifference("src/test/resources/file1.yaml", "src/test/resources/file.txt"));
+        Assertions.assertEquals(thrownNotSupportedFile.getMessage(),
+                "This file format is not supported. Supported formats: json, yaml");
 
         String expected1 = """
                 {
@@ -23,7 +28,10 @@ class DifferTest {
                  + verbose: true
                 }""";
         Assertions.assertEquals(expected1,
-                Differ.generate("src/test/resources/file1.json", "src/test/resources/file2.json"));
+                Differ.getDifference("src/test/resources/file1.json", "src/test/resources/file2.json"));
+        Assertions.assertEquals(expected1,
+                Differ.getDifference("src/test/resources/file1.yaml", "src/test/resources/file2.yaml"));
+
 
         String expected2 = """
                 {
@@ -33,6 +41,8 @@ class DifferTest {
                    timeout: 50
                 }""";
         Assertions.assertEquals(expected2,
-                Differ.generate("src/test/resources/file1.json", "src/test/resources/file3.json"));
+                Differ.getDifference("src/test/resources/file1.json", "src/test/resources/file3.json"));
+        Assertions.assertEquals(expected2,
+                Differ.getDifference("src/test/resources/file1.yaml", "src/test/resources/file3.yaml"));
     }
 }
