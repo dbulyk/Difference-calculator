@@ -27,8 +27,8 @@ public class Parser {
         } else if (extension.equals("json")) {
             return new ObjectMapper();
         } else {
-            throw new IllegalArgumentException("This file format is not supported. "
-                    + "Supported formats: json, yaml");
+            throw new IllegalArgumentException("This file extension is not supported. "
+                    + "Supported extensions: json, yaml");
         }
     }
 }
