@@ -6,8 +6,8 @@
 
 Утилита создана для сравнения плоских файлов формата json или yaml.
 В этом проекте отрабатывается работа с коллекциями и структурами данных. 
-Изучаются способы построения и обхода деревьев. Используются разные форматы данных (json, yml),
+Изучаются способы построения и обхода деревьев. Используются разные форматы данных (json, yml) и форматы вывода.
 Написаны тесты (JUnit) для проверки работоспособности.
 
 Демонстрация работы:\
-[![asciicast](https://asciinema.org/a/pItYWAuBkvSbQhAfAJYh7SnPx.svg)](https://asciinema.org/a/pItYWAuBkvSbQhAfAJYh7SnPx)
+[![asciicast](https://asciinema.org/a/qaVmfycRbySOMC22I2tFg9c9S.svg)](https://asciinema.org/a/qaVmfycRbySOMC22I2tFg9c9S)
