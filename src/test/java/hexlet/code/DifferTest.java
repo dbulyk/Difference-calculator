@@ -7,13 +7,16 @@ import java.io.IOException;
 
 class DifferTest {
     @Test
-    void generateTest() throws IllegalArgumentException, IOException {
+    void testWithEmptyFile() {
         Throwable thrownEmptyFile = Assertions.assertThrows(IllegalArgumentException.class, () ->
                 Differ.generate("src/test/resources/file1.json",
                         "src/test/resources/fileEmpty.json", "stylish"));
         Assertions.assertEquals(thrownEmptyFile.getMessage(),
                 "Comparison with an empty file is not allowed. Empty file: src/test/resources/fileEmpty.json");
+    }
 
+    @Test
+    void testWithNotSupportedFormat() {
         Throwable thrownNotSupportedFile = Assertions.assertThrows(IllegalArgumentException.class, () ->
                 Differ.generate("src/test/resources/file1.yaml",
                         "src/test/resources/file.txt", "stylish"));
@@ -24,8 +27,11 @@ class DifferTest {
                 Differ.generate("src/test/resources/file1.yaml",
                         "src/test/resources/file2.yaml", "test"));
         Assertions.assertEquals(thrownNotSupportedFormat.getMessage(),
-                "This format is not supported. Supported formats: stylish");
+                "This format is not supported. Supported formats: stylish, plain, json");
+    }
 
+    @Test
+    void testStylishFormat() throws IOException {
         String expected1 = """
                 {
                      chars1: [a, b, c]
@@ -55,7 +61,10 @@ class DifferTest {
         Assertions.assertEquals(expected1,
                 Differ.generate("src/test/resources/file1.yaml",
                         "src/test/resources/file2.yaml", "stylish"));
+    }
 
+    @Test
+    void testPlainFormat() throws IOException {
         String expected2 = """
                 Property 'chars2' was updated. From [complex value] to false
                 Property 'checked' was updated. From false to true
@@ -74,7 +83,10 @@ class DifferTest {
         Assertions.assertEquals(expected2,
                 Differ.generate("src/test/resources/file1.json",
                         "src/test/resources/file2.json", "plain"));
+    }
 
+    @Test
+    void testJsonFormat() throws IOException {
         String expected3 = """
                 {
                   "chars1" : {
