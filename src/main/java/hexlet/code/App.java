@@ -32,7 +32,7 @@ public class App implements Callable<String> {
     @Override
     public String call() {
         try {
-            String res = Differ.getDifference(filepath1, filepath2, format);
+            String res = Differ.generate(filepath1, filepath2, format);
             System.out.println(res);
             return res;
         } catch (IllegalArgumentException | IOException e) {
