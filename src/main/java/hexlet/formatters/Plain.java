@@ -18,7 +18,7 @@ public class Plain {
                 default -> res.append("");
             }
         });
-        return res.toString();
+        return res.toString().trim();
     }
 
     public static String isArray(Object object) {
