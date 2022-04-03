@@ -7,13 +7,13 @@ public class Stylish {
         StringBuilder res = new StringBuilder("{\n");
         recordsData.forEach((k, v) -> {
             switch (v.get("diff").toString()) {
-                case "removed" -> res.append("   - ").append(k).append(": ").append(v.get("value")).append("\n");
-                case "added" -> res.append("   + ").append(k).append(": ").append(v.get("value")).append("\n");
+                case "removed" -> res.append("  - ").append(k).append(": ").append(v.get("value")).append("\n");
+                case "added" -> res.append("  + ").append(k).append(": ").append(v.get("value")).append("\n");
                 case "updated" -> {
-                    res.append("   - ").append(k).append(": ").append(v.get("oldValue")).append("\n");
-                    res.append("   + ").append(k).append(": ").append(v.get("newValue")).append("\n");
+                    res.append("  - ").append(k).append(": ").append(v.get("oldValue")).append("\n");
+                    res.append("  + ").append(k).append(": ").append(v.get("newValue")).append("\n");
                 }
-                default -> res.append("     ").append(k).append(": ").append(v.get("value")).append("\n");
+                default -> res.append("    ").append(k).append(": ").append(v.get("value")).append("\n");
             }
         });
         res.append("}");
