@@ -18,14 +18,14 @@ class DifferTest {
     @Test
     void testWithNotSupportedFormat() {
         Throwable thrownNotSupportedFile = Assertions.assertThrows(IllegalArgumentException.class, () ->
-                Differ.generate("src/test/resources/file1.yaml",
+                Differ.generate("src/test/resources/file1.yml",
                         "src/test/resources/file.txt", "stylish"));
         Assertions.assertEquals(thrownNotSupportedFile.getMessage(),
-                "This file extension is not supported. Supported extensions: json, yaml");
+                "This file extension is not supported. Supported extensions: json, yml");
 
         Throwable thrownNotSupportedFormat = Assertions.assertThrows(IllegalArgumentException.class, () ->
-                Differ.generate("src/test/resources/file1.yaml",
-                        "src/test/resources/file2.yaml", "test"));
+                Differ.generate("src/test/resources/file1.yml",
+                        "src/test/resources/file2.yml", "test"));
         Assertions.assertEquals(thrownNotSupportedFormat.getMessage(),
                 "This format is not supported. Supported formats: stylish, plain, json");
     }
@@ -59,8 +59,8 @@ class DifferTest {
                   + setting3: none
                 }""";
         Assertions.assertEquals(expected1,
-                Differ.generate("src/test/resources/file1.yaml",
-                        "src/test/resources/file2.yaml", "stylish"));
+                Differ.generate("src/test/resources/file1.yml",
+                        "src/test/resources/file2.yml", "stylish"));
     }
 
     @Test
