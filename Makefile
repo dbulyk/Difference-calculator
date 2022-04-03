@@ -19,3 +19,6 @@ clean: #Выполняем очищение проекта от предыдущ
 build: #Выполняем сборку проекта
 	./gradlew clean build
 	make lint
+
+report:
+	./gradlew jacocoTestReport
