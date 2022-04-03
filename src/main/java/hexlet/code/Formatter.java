@@ -14,8 +14,8 @@ public class Formatter {
             case "stylish" -> Stylish.formatStylish(recordsData);
             case "plain" -> Plain.formatPlain(recordsData);
             case "json" -> Json.formatJson(recordsData);
-            default -> throw new IllegalArgumentException("This format is not supported. " +
-                    "Supported formats: stylish, plain, json");
+            default -> throw new IllegalArgumentException("This format is not supported. "
+                    + "Supported formats: stylish, plain, json");
         };
     }
 }
