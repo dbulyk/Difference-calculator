@@ -20,8 +20,7 @@ application {
 }
 
 compileJava {
-    options.release = 15
-    options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
+    options.release = 16
 }
 
 repositories {
