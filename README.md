@@ -10,4 +10,4 @@
 Написаны тесты (JUnit) для проверки работоспособности.
 
 Демонстрация работы:\
-[![asciicast](https://asciinema.org/a/qaVmfycRbySOMC22I2tFg9c9S.svg)](https://asciinema.org/a/qaVmfycRbySOMC22I2tFg9c9S)
+[![asciicast](https://asciinema.org/a/lk9Pa5TmhjaxGp9RXRNtvbyFP.svg)](https://asciinema.org/a/lk9Pa5TmhjaxGp9RXRNtvbyFP)
