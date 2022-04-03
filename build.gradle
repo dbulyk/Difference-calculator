@@ -50,7 +50,7 @@ jacocoTestReport {
 }
 
 jacoco {
-    applyTo run
+    toolVersion = "0.8.7"
 }
 
 
