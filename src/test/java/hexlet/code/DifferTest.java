@@ -12,7 +12,7 @@ class DifferTest {
                 Differ.generate("src/test/resources/file1.json",
                         "src/test/resources/fileEmpty.json", "stylish"));
         Assertions.assertEquals(thrownEmptyFile.getMessage(),
-                "Comparison with an empty file is not allowed. Empty file: src/test/resources/fileEmpty.json");
+                "Comparison with an empty file is not allowed.");
     }
 
     @Test

@@ -1,9 +1,9 @@
 package hexlet.code;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import hexlet.formatters.Json;
-import hexlet.formatters.Plain;
-import hexlet.formatters.Stylish;
+import hexlet.code.formatters.Json;
+import hexlet.code.formatters.Plain;
+import hexlet.code.formatters.Stylish;
 
 import java.util.Map;
 

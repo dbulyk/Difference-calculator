@@ -10,7 +10,9 @@ import java.util.concurrent.Callable;
 
 @Command(name = "gendiff", version = "gendiff 1.0", mixinStandardHelpOptions = true,
         description = "Compares two configuration files and shows a difference.")
-public class App implements Callable<String> {
+public class App implements Callable<Integer> {
+    private static final int SUCCESS_EXIT_CODE = 0;
+    private static final int ERROR_EXIT_CODE = 1;
     @Option(names = {"-f", "--format"}, defaultValue = "stylish", description = "output format [default: stylish]")
     private String format = "stylish";
 
@@ -26,18 +28,18 @@ public class App implements Callable<String> {
     }
 
     /**
-     * @author Dmitry Bulykin
      * @return String
+     * @author Dmitry Bulykin
      */
     @Override
-    public String call() {
+    public Integer call() {
         try {
             String res = Differ.generate(filepath1, filepath2, format);
             System.out.println(res);
-            return res;
+            return SUCCESS_EXIT_CODE;
         } catch (IllegalArgumentException | IOException e) {
             System.out.println(e.getMessage());
-            return e.getMessage();
+            return ERROR_EXIT_CODE;
         }
     }
 }
