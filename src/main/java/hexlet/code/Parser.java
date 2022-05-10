@@ -19,13 +19,11 @@ public class Parser {
     }
 
     private static ObjectMapper getObjectMapper(String extension) {
-        if (extension.equals("yml")) {
-            return new ObjectMapper(new YAMLFactory());
-        } else if (extension.equals("json")) {
-            return new ObjectMapper();
-        } else {
-            throw new IllegalArgumentException("This file extension is not supported. "
+        return switch (extension) {
+            case "yml", "yaml" -> new ObjectMapper(new YAMLFactory());
+            case "json" -> new ObjectMapper();
+            default -> throw new IllegalArgumentException("This file extension is not supported. "
                     + "Supported extensions: json, yml");
-        }
+        };
     }
 }
